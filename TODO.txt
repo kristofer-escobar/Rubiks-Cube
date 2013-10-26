@@ -1,0 +1,3 @@
+1) Fix colors, each face must have 9 of the same color (No more, no less).
+2) Read in input from HTML5 localStorage to set initial cube state.
+3) Call built functions to solve rubiks cube.

@@ -19,8 +19,8 @@ Cube.prototype.init = function(program, colors)
     this.colors = []; // this array will hold per-vertex color data
     this.transform = mat4(); // initialize object transform as identity matrix
     this.rotateAngle = 0; // initialize rotate angle.
-    this.orbitAngle = 0;
-    this.orbitAxis = 0;
+    this.orbitAngle = 0; // initialize orbit angle.
+    this.orbitAxis = 0; // initialize orbit axis.
 
     this.mkcube(colors); // delegate to auxiliary function
 
@@ -161,9 +161,7 @@ Cube.prototype.turn = function (angle, axis) {
     if (axis === undefined) axis = Y_AXIS;
     avec[axis] = 1;
 
-    //this.transform = mult(rotate(angle, avec), this.transform);
     this.transform = mult(this.transform, rotate(angle, avec));
-    
 }
 
 /* Orbit cube slice around a specified axis and for a given angle. */
@@ -213,15 +211,15 @@ Cube.prototype.orbitSlice = function (angle, axis) {
 
 // Rotate this cube to the right.
 Cube.prototype.rotateRight = function () {
-    count++;
+    this.count++;
     this.transform = mult(this.transform, rotate(1, [0, 1, 0]));
 
-    if (count == this.rotateAngle) {
+    if (this.count == this.rotateAngle) {
         // Stop rotating.
         this.rotateAngle = 0;
 
         // Reset count.
-        count = 0;
+        this.count = 0;
     
         // Re-enable buttons.
         enableBtns();
@@ -230,15 +228,15 @@ Cube.prototype.rotateRight = function () {
 
 // Rotate this cube to the left.
 Cube.prototype.rotateLeft = function () {
-    count--;
+    this.count--;
     this.transform = mult(this.transform, rotate(-1, [0, 1, 0]));
 
-    if (count == this.rotateAngle) {
+    if (this.count == this.rotateAngle) {
         // Stop rotating.
         this.rotateAngle = 0;
 
         // Reset count.
-        count = 0;
+        this.count = 0;
 
         // Re-enable buttons.
         enableBtns();
@@ -258,7 +256,7 @@ window.onload = function () {
     var shaders = initShaders( gl, "vertex-shader", "fragment-shader" );
 
     // Counter for current Y_AXIS.
-    var currentY = 0;
+    var currentY = -1;
 
     // Loop and create cubes.
     for (var i = 0; i < 27; i++) {

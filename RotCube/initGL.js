@@ -12,6 +12,12 @@ const Z_AXIS = 2;
 
 var drawables = []; // used to store any objects that need to be drawn
 
+var leftSlice = [0,1,2,9,10,11,18,19,20];
+var rightSlice = [6,7,8,15,16,17,24,25,26];
+
+var backtSlice = [0,3,6,9,12,15,18,21,24];
+var frontSlice = [2,5,8,11,14,17,20,23,26];
+
 /* Initialize global WebGL stuff - not object specific */
 function initGL()
 {
@@ -51,7 +57,6 @@ function initGL()
     var b = document.getElementById("Btn_TL");
     b.addEventListener("click",
         function(){
-
             // Check for a second cube.
             if(drawables.length > 1){
                 var secondCube = drawables[1];
@@ -67,10 +72,8 @@ function initGL()
     var c = document.getElementById("Btn_Perspective");
     c.addEventListener("click",
         function(){
-
             // Check for a second cube.
             if(drawables.length > 1){
-
                 // Change prespective.
                 projection = mult(projection,perspective(55, (canvas.width/canvas.height), 0.3, 1));
                 projection = mult(projection,lookAt([0,0,-1],[0,-1,1],[0,1,0]));
@@ -87,7 +90,6 @@ function initGL()
 
             // Check for a second cube.
             if(drawables.length > 1){
-
                 // Change othrographic projection.
                 projection = ortho(-4, 4, -4, 4, -100,100);
                 projection = mult(projection, rotate(70, [0.5, 1, 0.12]));
@@ -96,9 +98,13 @@ function initGL()
         false
     );
 
+   /***********************
+    * Slice rotation handlers.
+    ***********************/
+
     // Orbit top cube slice to the left.
     $('#btnOrbitTopLeft').click(function () {
-        for(var i = 18; i < 28; i++){
+        for(var i = 18; i < 27; i++){
             drawables[i].orbitSlice(90, Y_AXIS);
         }
     });
@@ -126,18 +132,91 @@ function initGL()
 
     // Orbit left cube slice down.
     $('#btnOrbitLeftDown').click(function () {
-        for(var i = 0; i < 9; i++){
-            drawables[i].orbit = 90;
+        for(i in leftSlice){
+            drawables[leftSlice[i]].orbitSlice(90, X_AXIS);
         }
     });
 
     // Orbit left cube slice up
     $('#btnOrbitLeftUp').click(function () {
-        for(var i = 0; i < 9; i++){
-            drawables[i].orbit = -90;
+        for(i in leftSlice){
+            drawables[leftSlice[i]].orbitSlice(-90, X_AXIS);
         }
     });
 
+    // Orbit right cube slice down.
+    $('#btnOrbitRightDown').click(function () {
+        for(i in rightSlice){
+            drawables[rightSlice[i]].orbitSlice(90, X_AXIS);
+        }
+    });
+
+    // Orbit right cube slice up
+    $('#btnOrbitRightUp').click(function () {
+        for(i in rightSlice){
+            drawables[rightSlice[i]].orbitSlice(-90, X_AXIS);
+        }
+    });
+
+    // Orbit back cube slice left.
+    $('#btnOrbitBackLeft').click(function () {
+        for(i in backtSlice){
+            drawables[backtSlice[i]].orbitSlice(90, Z_AXIS);
+        }
+    });
+
+    // Orbit back cube slice right.
+    $('#btnOrbitBackRight').click(function () {
+        for(i in backtSlice){
+            drawables[backtSlice[i]].orbitSlice(-90, Z_AXIS);
+        }
+    });
+
+    // Orbit front cube slice left.
+    $('#btnOrbitFrontLeft').click(function () {
+        for(i in frontSlice){
+            drawables[frontSlice[i]].orbitSlice(90, Z_AXIS);
+        }
+    });
+
+    // Orbit front cube right up
+    $('#btnOrbitFrontRight').click(function () {
+        for(i in frontSlice){
+            drawables[frontSlice[i]].orbitSlice(-90, Z_AXIS);
+        }
+    });
+
+    /********************************
+     * Entire cube rotation handlers.
+     ********************************/
+
+    // Rotate left.
+    $('#btnRotateCubeLeft').click(function () {
+        for(var i = 0; i < 27; i++){
+            drawables[i].orbitSlice(90, Y_AXIS);
+        }
+    });
+
+    // Rotate right.
+    $('#btnRotateCubeRight').click(function () {
+        for(var i = 0; i < 27; i++){
+            drawables[i].orbitSlice(-90, Y_AXIS);
+        }
+    });
+
+    // Rotate Up.
+    $('#btnRotateCubeUp').click(function () {
+        for(var i = 0; i < 27; i++){
+            drawables[i].orbitSlice(-90, X_AXIS);
+        }
+    });
+
+    // Rotate down.
+    $('#btnRotateCubeDown').click(function () {
+        for(var i = 0; i < 27; i++){
+            drawables[i].orbitSlice(90, X_AXIS);
+        }
+    });
 }
 
 function enableBtns(){
