@@ -257,16 +257,66 @@ window.onload = function () {
 
     // Counter for current Y_AXIS.
     var currentY = -2;
+    var blackDefault = [0.0, 0.0, 0.0, 1.0];
+
+    // Default color to black.
+    var frontFaceColor = blackDefault;
+    var rightFaceColor = blackDefault;
+    var bottomFaceColor = blackDefault;
+    var topFaceColor = blackDefault;
+    var backFaceColor = blackDefault;
+    var leftFaceColor = blackDefault;
 
     // Loop and create cubes.
     for (var i = 0; i < 27; i++) {
 
-        // Create colored cubes.
-        var cube = new Cube(shaders, [colors[(1 + i) % 5], colors[(2 + i) % 5], colors[(3 + i) % 5], colors[(4 + i) % 5], colors[(5 + i) % 5], colors[(6 + i) % 5]])
-
         // Nine Cubes per slice.
         var mod = i % 9;
         
+        // Initial cube state. (Top left to bottom right.)
+        var initTopFaceColors    = [colors["G"], colors["G"], colors["W"], colors["R"], colors["R"], colors["G"], colors["R"], colors["R"], colors["G"]];
+        var initLeftfaceColors   = [colors["O"], colors["W"], colors["W"], colors["O"], colors["G"], colors["O"], colors["Y"], colors["Y"], colors["Y"]];
+        var initFrontFaceColors  = [colors["G"], colors["G"], colors["O"], colors["Y"], colors["Y"], colors["Y"], colors["R"], colors["B"], colors["G"]];
+        var initRightFaceColors  = [colors["Y"], colors["Y"], colors["R"], colors["R"], colors["B"], colors["R"], colors["R"], colors["W"], colors["W"]];
+        var initBottomFaceColors = [colors["B"], colors["O"], colors["Y"], colors["B"], colors["O"], colors["B"], colors["B"], colors["O"], colors["B"]];
+        var initBackFaceColors   = [colors["O"], colors["G"], colors["O"], colors["W"], colors["W"], colors["B"], colors["W"], colors["W"], colors["B"]];
+
+        // Cube positions for each face.
+        var topFacePositions = [18,21,24,19,22,25,20,23,26];
+        var bottomFacePositions = [2,5,8,1,4,7,0,3,6];
+        var leftFacePositions = [18,19,20,9,10,11,0,1,2];
+        var rightFacePositions = [26,25,24,17,16,15,8,7,6];
+        var frontFacePositions = [20,23,26,11,14,17,2,5,8];
+        var backFacePositions = [18,21,24,15,12,9,6,3,0];
+
+        // Set initial colors for each cube in a face.
+        if (checkPosition(frontFacePositions, i) !== -1) {
+            frontFaceColor = initFrontFaceColors[checkPosition(frontFacePositions, i)];
+        }
+
+        if (checkPosition(rightFacePositions, i) !== -1) {
+            rightFaceColor = initRightFaceColors[checkPosition(rightFacePositions, i)];
+        }
+
+        if (checkPosition(bottomFacePositions, i) !== -1) {
+            bottomFaceColor = initBottomFaceColors[checkPosition(bottomFacePositions, i)];
+        }
+
+        if (checkPosition(topFacePositions, i) !== -1) {
+            topFaceColor = initTopFaceColors[checkPosition(topFacePositions, i)];
+        }
+
+        if (checkPosition(backFacePositions, i) !== -1) {
+            backFaceColor = initBackFaceColors[checkPosition(backFacePositions, i)];
+        }
+
+        if (checkPosition(leftFacePositions, i) !== -1) {
+            leftFaceColor = initLeftfaceColors[checkPosition(leftFacePositions, i)];
+        }
+
+        // Create cube, color order: front, right, bottom, top, back, left
+        var cube = new Cube(shaders, [frontFaceColor, rightFaceColor, bottomFaceColor, topFaceColor, backFaceColor, leftFaceColor]);
+
         // Increase Y_AXIS
         if (mod == 0) {
             currentY++;
@@ -297,11 +347,25 @@ window.onload = function () {
 /*  Colors array used for creating cubes 
     with different color faces.
 */
-var colors = [
-    [1.0, 0.0, 0.0, 1.0], // red
-    [1.0, 1.0, 0.0, 1.0], // yellow
-    [0.0, 1.0, 0.0, 1.0], // green
-    [0.0, 0.0, 1.0, 1.0], // blue
-    [1.0, 0.0, 1.0, 1.0], // magenta
-    [1.0, 1.0, 1.0, 1.0]  // white
-    ];
+var colors = {
+    "R": [1.0, 0.0, 0.0, 1.0], // red
+    "Y":[1.0, 1.0, 0.0, 1.0], // yellow
+    "G":[0.0, 1.0, 0.0, 1.0], // green
+    "B":[0.0, 0.0, 1.0, 1.0], // blue
+    "O":[1.0, 165/255, 0, 1.0], // orange
+    "W":[1.0, 1.0, 1.0, 1.0]  // white
+};
+
+// Helper function to check a dictionary.
+function checkPosition(dict, pos) {
+
+    for (var i in dict) {
+        if (dict[i] === pos) {
+            // If found return position.
+            return i;
+        }
+    }
+
+    // Not found, return -1.
+    return -1;
+}
