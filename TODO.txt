@@ -1,3 +1,9 @@
-1) Fix colors, each face must have 9 of the same color (No more, no less).
-2) Read in input from HTML5 localStorage to set initial cube state.
-3) Call built functions to solve rubiks cube.
+1) Fix colors, each face must have 9 of the same color (No more, no less). -- Done.
+2) Fix cube slice orbits. -- In Progress.
+3) Read in input from HTML5 localStorage to set initial cube state and solution. (Currently initial state is hard-coded.)
+4) Call built functions to solve rubiks cube after reading in solution.
+5) Incorporate smooth and realistic shading. (Include at least two light sources.)
+6) Create buttons to play and replay animation.
+7) Create buttons to load initial state and solution files.
+8) Create button to change perspective and angle.
+9) Create button to quit application. (optional... maybe?)

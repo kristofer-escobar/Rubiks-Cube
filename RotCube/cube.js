@@ -259,8 +259,6 @@ window.onload = function () {
     var currentY = -2;
     var blackDefault = [0.0, 0.0, 0.0, 1.0];
 
-
-
     // Loop and create cubes.
     for (var i = 0; i < 27; i++) {
 
