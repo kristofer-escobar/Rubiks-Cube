@@ -256,7 +256,7 @@ window.onload = function () {
     var shaders = initShaders( gl, "vertex-shader", "fragment-shader" );
 
     // Counter for current Y_AXIS.
-    var currentY = -1;
+    var currentY = -2;
 
     // Loop and create cubes.
     for (var i = 0; i < 27; i++) {
