@@ -259,16 +259,18 @@ window.onload = function () {
     var currentY = -2;
     var blackDefault = [0.0, 0.0, 0.0, 1.0];
 
-    // Default color to black.
-    var frontFaceColor = blackDefault;
-    var rightFaceColor = blackDefault;
-    var bottomFaceColor = blackDefault;
-    var topFaceColor = blackDefault;
-    var backFaceColor = blackDefault;
-    var leftFaceColor = blackDefault;
+
 
     // Loop and create cubes.
     for (var i = 0; i < 27; i++) {
+
+        // Default color to black.
+        var frontFaceColor = blackDefault;
+        var rightFaceColor = blackDefault;
+        var bottomFaceColor = blackDefault;
+        var topFaceColor = blackDefault;
+        var backFaceColor = blackDefault;
+        var leftFaceColor = blackDefault;
 
         // Nine Cubes per slice.
         var mod = i % 9;
@@ -323,18 +325,84 @@ window.onload = function () {
         }
 
         // Set initial cube positions.
-        if (mod < 3) {
-            cube.move(-1, X_AXIS);
-            cube.move(currentY, Y_AXIS);
-            cube.move((i % 3) - 1, Z_AXIS);
-        } else if (mod < 6) {
-            cube.move(0, X_AXIS);
-            cube.move(currentY, Y_AXIS);
-            cube.move((i % 3) - 1, Z_AXIS);
-        } else {
-            cube.move(1, X_AXIS);
-            cube.move(currentY, Y_AXIS);
-            cube.move((i % 3) - 1, Z_AXIS);
+        if (mod < 3) { // Left Slice
+
+            // Space out cubes on X_AXIS
+            if (checkPosition(leftFacePositions, i) !== -1)
+                cube.move(-1.05, X_AXIS);
+            else if (checkPosition(rightFacePositions, i) !== -1)
+                cube.move(1.05, X_AXIS);
+            else
+                cube.move(-1, X_AXIS);
+
+            // Space out cubes on Y_AXIS
+            if(checkPosition(topFacePositions,i) !== -1)
+                cube.move(currentY + 0.05, Y_AXIS);
+            else if (checkPosition(bottomFacePositions, i) !== -1)
+                cube.move(currentY - 0.05, Y_AXIS);
+            else
+                cube.move(currentY, Y_AXIS);
+
+            // Space out cubes on Z_AXIS
+            if (checkPosition(backFacePositions, i) !== -1)
+                cube.move((i % 3) - 1.05, Z_AXIS);
+            else if (checkPosition(frontFacePositions, i) !== -1)
+                cube.move((i % 3) - 0.95, Z_AXIS);
+            else
+                cube.move((i % 3) - 1, Z_AXIS);
+
+        } else if (mod < 6) { // Middle slice
+
+            // Space out cubes on X_AXIS
+            if (checkPosition(leftFacePositions, i) !== -1)
+                cube.move(-1.05, X_AXIS);
+            else if (checkPosition(rightFacePositions, i) !== -1)
+                cube.move(1.05, X_AXIS);
+            else
+                cube.move(0, X_AXIS);
+
+            // Space out cubes on Y_AXIS
+            if (checkPosition(topFacePositions, i) !== -1)
+                cube.move(currentY + 0.05, Y_AXIS);
+            else if (checkPosition(bottomFacePositions, i) !== -1)
+                cube.move(currentY - 0.05, Y_AXIS);
+            else
+                cube.move(currentY, Y_AXIS);
+
+            // Space out cubes on Z_AXIS
+            if (checkPosition(backFacePositions, i) !== -1)
+                cube.move((i % 3) - 1.05, Z_AXIS);
+            else if (checkPosition(frontFacePositions, i) !== -1)
+                cube.move((i % 3) - 0.95, Z_AXIS);
+            else
+                cube.move((i % 3) - 1, Z_AXIS);
+
+        } else { // Right slice
+
+            // Space out cubes on X_AXIS
+            if (checkPosition(leftFacePositions, i) !== -1)
+                cube.move(-1.05, X_AXIS);
+            else if (checkPosition(rightFacePositions, i) !== -1)
+                cube.move(1.05, X_AXIS);
+            else
+                cube.move(1, X_AXIS);
+
+            // Space out cubes on Y_AXIS
+            if (checkPosition(topFacePositions, i) !== -1)
+                cube.move(currentY + 0.05, Y_AXIS);
+            else if (checkPosition(bottomFacePositions, i) !== -1)
+                cube.move(currentY - 0.05, Y_AXIS);
+            else
+                cube.move(currentY, Y_AXIS);
+
+            // Space out cubes on Z_AXIS
+            if (checkPosition(backFacePositions, i) !== -1)
+                cube.move((i % 3) - 1.05, Z_AXIS);
+            else if (checkPosition(frontFacePositions, i) !== -1)
+                cube.move((i % 3) - 0.95, Z_AXIS);
+            else
+                cube.move((i % 3) - 1, Z_AXIS);
+
         }
 
         // Add to drawable array.
