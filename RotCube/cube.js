@@ -206,6 +206,8 @@ Cube.prototype.orbitSlice = function (angle, axis) {
 
         // Reset count.
         this.count = 0;
+
+        enableBtns();
     }
 }
 
@@ -247,7 +249,6 @@ Cube.prototype.rotateLeft = function () {
 window.onload = function () {
 
     // Hide other buttons for now.
-    $('.turn_buttons').hide();
     $('.view_buttons').hide();
 
     initGL(); // basic WebGL setup for the scene 
@@ -282,12 +283,12 @@ window.onload = function () {
         var initBackFaceColors   = [colors["O"], colors["G"], colors["O"], colors["W"], colors["W"], colors["B"], colors["W"], colors["W"], colors["B"]];
 
         // Cube positions for each face.
-        var topFacePositions = [18,21,24,19,22,25,20,23,26];
-        var bottomFacePositions = [2,5,8,1,4,7,0,3,6];
-        var leftFacePositions = [18,19,20,9,10,11,0,1,2];
-        var rightFacePositions = [26,25,24,17,16,15,8,7,6];
-        var frontFacePositions = [20,23,26,11,14,17,2,5,8];
-        var backFacePositions = [18,21,24,15,12,9,6,3,0];
+        var topFacePositions    = [18,21,24,19,22,25,20,23,26];
+        var bottomFacePositions = [ 2, 5, 8, 1, 4, 7, 0, 3, 6];
+        var leftFacePositions   = [18,19,20, 9,10,11, 0, 1, 2];
+        var rightFacePositions  = [26,25,24,17,16,15, 8, 7, 6];
+        var frontFacePositions  = [20,23,26,11,14,17, 2, 5, 8];
+        var backFacePositions   = [18,21,24,15,12, 9, 6, 3, 0];
 
         // Set initial colors for each cube in a face.
         if (checkPosition(frontFacePositions, i) !== -1) {
@@ -414,7 +415,7 @@ window.onload = function () {
     with different color faces.
 */
 var colors = {
-    "R": [1.0, 0.0, 0.0, 1.0], // red
+    "R":[1.0, 0.0, 0.0, 1.0], // red
     "Y":[1.0, 1.0, 0.0, 1.0], // yellow
     "G":[0.0, 1.0, 0.0, 1.0], // green
     "B":[0.0, 0.0, 1.0, 1.0], // blue
