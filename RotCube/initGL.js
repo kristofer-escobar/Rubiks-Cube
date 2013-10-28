@@ -12,7 +12,7 @@ const Z_AXIS = 2;
 
 var drawables = []; // used to store any objects that need to be drawn
 
-// Initialize sices.
+// Initialize slices.
 var topSlice = [18,21,24,19,22,25,20,23,26];
 var bottomSlice = [2,5,8,1,4,7,0,3,6];
 var leftSlice = [18,19,20,9,10,11,0,1,2];

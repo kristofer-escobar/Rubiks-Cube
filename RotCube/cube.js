@@ -11,6 +11,9 @@
     and determine when to stop animating. */
 var Cube = function (program, colors) { this.init(program, colors); }
 
+// Create reference to local storage.
+var localStorage = window.localStorage;
+
 /* Initialize properties of this color cube object. */
 Cube.prototype.init = function(program, colors)
 {
@@ -248,8 +251,47 @@ Cube.prototype.rotateLeft = function () {
 /* Set up event callback to start the application */
 window.onload = function () {
 
+    $('#btnLoadIntialState').click(function () {
+
+        var initialState = $('#tbInitialState').val().replace(/\s/g, "");
+
+        // Store each face with their initial states.
+        localStorage.setItem("top", initialState.substring(0, 9));
+        localStorage.setItem("left", initialState.substring(9, 12) + initialState.substring(18, 21) + initialState.substring(27, 30));
+        localStorage.setItem("front", initialState.substring(12, 15) + initialState.substring(21, 24) + initialState.substring(30, 33));
+        localStorage.setItem("right", initialState.substring(15, 18) + initialState.substring(24, 27) + initialState.substring(33, 36));
+        localStorage.setItem("bottom", initialState.substring(36, 45));
+        localStorage.setItem("back", initialState.substring(45, 54));
+
+        location.reload();
+    });
+
+    $('#btnClear').click(function () {
+        localStorage.clear();
+        location.reload();
+    });
+
+    $('#btnLoadSolution').click(function () {
+        // Load solution.
+        var solution = $('#tbSolution').val().replace(/\s/g, "");
+
+        // Store solution.
+        localStorage.setItem("solution", solution);
+    });
+
+    $('#btnPlay').click(function () {
+
+        if (localStorage.getItem("solution") !== null) {
+            // Play solution animation.
+        } else {
+            alert("Please load a solution first.");
+        }
+
+    });
+
     // Hide other buttons for now.
     $('.view_buttons').hide();
+    $('.test_buttons').hide();
 
     initGL(); // basic WebGL setup for the scene 
 
@@ -259,6 +301,33 @@ window.onload = function () {
     // Counter for current Y_AXIS.
     var currentY = -2;
     var blackDefault = [0.0, 0.0, 0.0, 1.0];
+
+    // If initial state is not loaded, then load defaults.
+    if (localStorage.getItem("top") !== null && localStorage.getItem("left") !== null && localStorage.getItem("front") !== null && localStorage.getItem("right") !== null && localStorage.getItem("bottom") !== null && localStorage.getItem("back") !== null) {
+        // Store colors for each face in arrays.
+        var topColor = localStorage.getItem("top").split("");
+        var leftColor = localStorage.getItem("left").split("");
+        var frontColor = localStorage.getItem("front").split("");
+        var rightColor = localStorage.getItem("right").split("");
+        var bottomColor = localStorage.getItem("bottom").split("");
+        var backColor = localStorage.getItem("back").split("");
+
+        // Get rgb color values for each face.
+        var rgbTopColor = split(jQuery.map(topColor, function (n) { return colors[n]; }), 9);
+        var rgbLeftColor = split(jQuery.map(leftColor, function (n) { return colors[n]; }), 9);
+        var rgbFrontColor = split(jQuery.map(frontColor, function (n) { return colors[n]; }), 9);
+        var rgbRightColor = split(jQuery.map(rightColor, function (n) { return colors[n]; }), 9);
+        var rgbBottomColor = split(jQuery.map(bottomColor, function (n) { return colors[n]; }), 9);
+        var rgbBackColor = split(jQuery.map(backColor, function (n) { return colors[n]; }), 9);
+    } else {
+        // Load default colors.
+        var rgbTopColor = [colors["R"], colors["R"], colors["R"], colors["R"], colors["R"], colors["R"], colors["R"], colors["R"], colors["R"]];
+        var rgbLeftColor = [colors["Y"], colors["Y"], colors["Y"], colors["Y"], colors["Y"], colors["Y"], colors["Y"], colors["Y"], colors["Y"]];
+        var rgbFrontColor = [colors["G"], colors["G"], colors["G"], colors["G"], colors["G"], colors["G"], colors["G"], colors["G"], colors["G"]];
+        var rgbRightColor = [colors["B"], colors["B"], colors["B"], colors["B"], colors["B"], colors["B"], colors["B"], colors["B"], colors["B"]];
+        var rgbBottomColor = [colors["O"], colors["O"], colors["O"], colors["O"], colors["O"], colors["O"], colors["O"], colors["O"], colors["O"]];
+        var rgbBackColor = [colors["W"], colors["W"], colors["W"], colors["W"], colors["W"], colors["W"], colors["W"], colors["W"], colors["W"]];
+    }
 
     // Loop and create cubes.
     for (var i = 0; i < 27; i++) {
@@ -274,14 +343,6 @@ window.onload = function () {
         // Nine Cubes per slice.
         var mod = i % 9;
         
-        // Initial cube state. (Top left to bottom right.)
-        var initTopFaceColors    = [colors["G"], colors["G"], colors["W"], colors["R"], colors["R"], colors["G"], colors["R"], colors["R"], colors["G"]];
-        var initLeftfaceColors   = [colors["O"], colors["W"], colors["W"], colors["O"], colors["G"], colors["O"], colors["Y"], colors["Y"], colors["Y"]];
-        var initFrontFaceColors  = [colors["G"], colors["G"], colors["O"], colors["Y"], colors["Y"], colors["Y"], colors["R"], colors["B"], colors["G"]];
-        var initRightFaceColors  = [colors["Y"], colors["Y"], colors["R"], colors["R"], colors["B"], colors["R"], colors["R"], colors["W"], colors["W"]];
-        var initBottomFaceColors = [colors["B"], colors["O"], colors["Y"], colors["B"], colors["O"], colors["B"], colors["B"], colors["O"], colors["B"]];
-        var initBackFaceColors   = [colors["O"], colors["G"], colors["O"], colors["W"], colors["W"], colors["B"], colors["W"], colors["W"], colors["B"]];
-
         // Cube positions for each face.
         var topFacePositions    = [18,21,24,19,22,25,20,23,26];
         var bottomFacePositions = [ 2, 5, 8, 1, 4, 7, 0, 3, 6];
@@ -292,27 +353,27 @@ window.onload = function () {
 
         // Set initial colors for each cube in a face.
         if (checkPosition(frontFacePositions, i) !== -1) {
-            frontFaceColor = initFrontFaceColors[checkPosition(frontFacePositions, i)];
+            frontFaceColor = rgbFrontColor[checkPosition(frontFacePositions, i)];
         }
 
         if (checkPosition(rightFacePositions, i) !== -1) {
-            rightFaceColor = initRightFaceColors[checkPosition(rightFacePositions, i)];
+            rightFaceColor = rgbRightColor[checkPosition(rightFacePositions, i)];
         }
 
         if (checkPosition(bottomFacePositions, i) !== -1) {
-            bottomFaceColor = initBottomFaceColors[checkPosition(bottomFacePositions, i)];
+            bottomFaceColor = rgbBottomColor[checkPosition(bottomFacePositions, i)];
         }
 
         if (checkPosition(topFacePositions, i) !== -1) {
-            topFaceColor = initTopFaceColors[checkPosition(topFacePositions, i)];
+            topFaceColor = rgbTopColor[checkPosition(topFacePositions, i)];
         }
 
         if (checkPosition(backFacePositions, i) !== -1) {
-            backFaceColor = initBackFaceColors[checkPosition(backFacePositions, i)];
+            backFaceColor = rgbBackColor[checkPosition(backFacePositions, i)];
         }
 
         if (checkPosition(leftFacePositions, i) !== -1) {
-            leftFaceColor = initLeftfaceColors[checkPosition(leftFacePositions, i)];
+            leftFaceColor = rgbLeftColor[checkPosition(leftFacePositions, i)];
         }
 
         // Create cube, color order: front, right, bottom, top, back, left
@@ -435,4 +496,14 @@ function checkPosition(dict, pos) {
 
     // Not found, return -1.
     return -1;
+}
+
+// Helper function to split into arrays.
+function split(a, n) {
+    var len = a.length, out = [], i = 0;
+    while (i < len) {
+        var size = Math.ceil((len - i) / n--);
+        out.push(a.slice(i, i += size));
+    }
+    return out;
 }

@@ -55,6 +55,7 @@ main()
         <button id = "Btn_Perspective">Set Perspective</button>
         <button id = "Btn_Orthographic">Set Orthographic</button>
     </div>
+<span class="test_buttons">
     <div>
         <button id="btnOrbitTopLeft">Orbit Top Left</button>
         <button id="btnOrbitTopRight">Orbit Top Right</button>
@@ -79,6 +80,7 @@ main()
         <button id="btnOrbitFrontLeft">Orbit Front Left</button>
         <button id="btnOrbitFrontRight">Orbit Front Right</button>   
     </div>
+</span>
     <div>
         <br />
         <button id="btnRotateCubeLeft">Rotate Left</button>
@@ -88,9 +90,32 @@ main()
     </div>
     <div>
         <br />
-        <input id="tbSolution" type="text" value="O1W1R1Y3"/>
+        <textarea id="tbInitialState" rows="10" cols="20">GGW
+RRG
+RRG
+OWWGGOYYR
+OGOYYYRBR
+YYYRBGRWW
+BOY
+BOB
+BOB
+OGO
+WWB
+WWB        </textarea>
+        <textarea id="tbSolution" rows="10" cols="20">
+O1W1R1Y3
+        </textarea>
+    </div>
+    <div>
+        <input id="btnLoadIntialState" type="button" value="Load Initial State" />
         <input id="btnLoadSolution" type="button" value="Load Solution" />
     </div>
+    <div>
+        <input id="btnClear" type="button" value="Clear Initial State" />
+        <input id="btnPlay" type="button" value="Play Solution" />
+    </div>
+        
+    
 </span>
 </body>
 </html>
