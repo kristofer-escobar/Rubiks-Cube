@@ -283,6 +283,29 @@ window.onload = function () {
 
         if (localStorage.getItem("solution") !== null) {
             // Play solution animation.
+
+            $("#btnOrbitBottomLeft").trigger('click');
+
+            setTimeout(function(){
+                $("#btnOrbitBackLeft").trigger('click');
+            }, 2000);
+            
+            setTimeout(function () {
+                $("#btnOrbitTopRight").trigger('click');
+            }, 4000);
+
+            setTimeout(function () {
+                $("#btnOrbitFrontRight").trigger('click');
+            }, 6000);
+
+            setTimeout(function () {
+                $("#btnOrbitFrontRight").trigger('click');
+            }, 8000);
+
+            setTimeout(function () {
+                $("#btnOrbitFrontRight").trigger('click');
+            }, 10000);
+
         } else {
             alert("Please load a solution first.");
         }
@@ -349,7 +372,7 @@ window.onload = function () {
         var leftFacePositions   = [18,19,20, 9,10,11, 0, 1, 2];
         var rightFacePositions  = [26,25,24,17,16,15, 8, 7, 6];
         var frontFacePositions  = [20,23,26,11,14,17, 2, 5, 8];
-        var backFacePositions   = [18,21,24,15,12, 9, 6, 3, 0];
+        var backFacePositions   = [0 , 3, 6, 9,12,15,18,21,24];
 
         // Set initial colors for each cube in a face.
         if (checkPosition(frontFacePositions, i) !== -1) {

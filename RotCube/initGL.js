@@ -4,7 +4,7 @@
 
 var canvas; // global to hold reference to an HTML5 canvas
 var gl; // global to hold reference to our WebGL context
-
+var animating = true;
 // a few simple constants
 const X_AXIS = 0;
 const Y_AXIS = 1;
@@ -13,12 +13,12 @@ const Z_AXIS = 2;
 var drawables = []; // used to store any objects that need to be drawn
 
 // Initialize slices.
-var topSlice = [18,21,24,19,22,25,20,23,26];
+var topSlice    = [18,21,24,19,22,25,20,23,26];
 var bottomSlice = [2,5,8,1,4,7,0,3,6];
-var leftSlice = [18,19,20,9,10,11,0,1,2];
-var rightSlice = [26,25,24,17,16,15,8,7,6];
-var backSlice = [18,21,24,15,12,9,6,3,0];
-var frontSlice = [20,23,26,11,14,17,2,5,8];
+var leftSlice   = [18,19,20,9,10,11,0,1,2];
+var rightSlice  = [26,25,24,17,16,15,8,7,6];
+var backSlice   = [24,21,18,15,12,9,6,3,0];
+var frontSlice  = [20,23,26,11,14,17,2,5,8];
 
 /* Initialize global WebGL stuff - not object specific */
 function initGL()
