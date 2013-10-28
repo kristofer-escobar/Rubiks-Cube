@@ -279,32 +279,95 @@ window.onload = function () {
         localStorage.setItem("solution", solution);
     });
 
+    // Play solution animation.
     $('#btnPlay').click(function () {
+        // Approx time per animation.
+        var animationTime = 2000;
+        var timeout = 0;
 
         if (localStorage.getItem("solution") !== null) {
-            // Play solution animation.
 
-            $("#btnOrbitBottomLeft").trigger('click');
+            var solutionString = localStorage.getItem("solution");
 
-            setTimeout(function(){
-                $("#btnOrbitBackLeft").trigger('click');
-            }, 2000);
-            
-            setTimeout(function () {
-                $("#btnOrbitTopRight").trigger('click');
-            }, 4000);
+            while (solutionString.length != 0) {
+                var move = solutionString.substring(0, 1).toUpperCase();
+                var times = solutionString.substring(1, 2);
 
-            setTimeout(function () {
-                $("#btnOrbitFrontRight").trigger('click');
-            }, 6000);
+                solutionString = solutionString.slice(2);
 
-            setTimeout(function () {
-                $("#btnOrbitFrontRight").trigger('click');
-            }, 8000);
+                if (move == "O") {
 
-            setTimeout(function () {
-                $("#btnOrbitFrontRight").trigger('click');
-            }, 10000);
+                    while (times > 0) {
+                        setTimeout(function () {
+                            $("#btnOrbitBottomLeft").trigger('click');
+                        }, timeout);
+
+                        timeout = timeout + animationTime;
+
+                        times--;
+                    }
+
+                } else if (move == "W") {
+                    while (times > 0) {
+                        setTimeout(function () {
+                            $("#btnOrbitBackLeft").trigger('click');
+                        }, timeout);
+
+                        timeout = timeout + animationTime;
+
+                        times--;
+                    }
+
+                } else if (move == "R") {
+                    while (times > 0) {
+                        setTimeout(function () {
+                            $("#btnOrbitTopRight").trigger('click');
+                        }, timeout);
+
+                        timeout = timeout + animationTime;
+
+                        times--;
+                    }
+
+                } else if (move == "Y") {
+                    while (times > 0) {
+                        setTimeout(function () {
+                            $("#btnOrbitFrontRight").trigger('click');
+                        }, timeout);
+
+                        timeout = timeout + animationTime;
+
+                        times--;
+                    }
+
+                } else if (move == "G") {
+                    while (times > 0) {
+                        setTimeout(function () {
+                            $("#btnOrbitLeftDown").trigger('click');
+                        }, timeout);
+
+                        timeout = timeout + animationTime;
+
+                        times--;
+                    }
+
+                } else if (move == "B") {
+                    while (times > 0) {
+                        setTimeout(function () {
+                            $("#btnOrbitRightUp").trigger('click');
+                        }, timeout);
+
+                        timeout = timeout + animationTime;
+
+                        times--;
+                    }
+
+                } else {
+                    alert("Error: Unknown move.")
+                    return;
+                }
+
+            }
 
         } else {
             alert("Please load a solution first.");

@@ -4,7 +4,7 @@
 
 var canvas; // global to hold reference to an HTML5 canvas
 var gl; // global to hold reference to our WebGL context
-var animating = true;
+
 // a few simple constants
 const X_AXIS = 0;
 const Y_AXIS = 1;
