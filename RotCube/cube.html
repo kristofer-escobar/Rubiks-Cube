@@ -10,14 +10,13 @@
 			attribute vec4 vColor; // vert attribs bound to array buffer data
 			attribute  vec4 vNormal;
 
-
 			varying vec4 color; // sent down to later stages of the pipeline
 
 			uniform mat4 projection; // projection matrix passed from the app
 			uniform mat4 modeltransform; // per-object transform passed from the app
 
 			uniform vec4 ambientProduct, diffuseProduct, specularProduct;
-			
+
 			uniform vec4 lightPosition;
 
 			uniform float shininess;
@@ -47,7 +46,7 @@
 			float Ks = pow( max(dot(N, H), 0.0), shininess );
 			vec4  specular = Ks * specularProduct;
 			if( dot(L, N) < 0.0 ) {
-			specular = vec4(0.8, 0.8, 0.3, 0);
+			specular = vec4(.8, .8, .8, 0);
 
 			}
 

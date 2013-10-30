@@ -61,7 +61,7 @@ Cube.prototype.draw = function () {
         this.orbitSlice(this.orbitAngle, this.orbitAxis);
     }
 
-    gl.useProgram( this.program ); // set the current shader programs
+    gl.useProgram(this.program ); // set the current shader programs
 
     var projId = gl.getUniformLocation(this.program, "projection"); 
     gl.uniformMatrix4fv(projId, false, flatten(projection));
@@ -85,15 +85,15 @@ Cube.prototype.draw = function () {
 	gl.vertexAttribPointer(vNormal, 4, gl.FLOAT, false, 0, 0);
 	gl.enableVertexAttribArray(vNormal);
 
-	var lightPosition = vec4(3.0, 1.0, 0.0, 0.0);
-	var lightAmbient = vec4(0.0, 0.0, 0.8, 1.0);
-	var lightDiffuse = vec4(1.0, 1.0, 1.0, 1.0);
+	var lightPosition = vec4(-3.2, -3.0, 0.0, 1.0);
+	var lightAmbient = vec4(0.2, 0.2, 0.2, 1.0);
+	var lightDiffuse = vec4(.8, .8, .8, 1.0);
 	var lightSpecular = vec4(1.0, 1.0, 1.0, 1.0);
 
 	var materialAmbient = vec4(0.0, 0.0, 0.0, 1.0);
 	var materialDiffuse = vec4(1.0, 1.0, 1.0, 1.0);
-	var materialSpecular = vec4(0.0, 0.0, 0.0, 0.0);
-	var materialShininess = 6.0;
+	var materialSpecular = vec4(0.0, 0.3, 0.3, 0.0);
+	var materialShininess = 4.0;
 
 	var ambientProduct = mult(lightAmbient, materialAmbient);
 	var diffuseProduct = mult(lightDiffuse, materialDiffuse);
@@ -105,8 +105,6 @@ Cube.prototype.draw = function () {
 	gl.uniform4fv(gl.getUniformLocation(this.program, "lightPosition"), flatten(lightPosition));
 	gl.uniform1f(gl.getUniformLocation(this.program, "shininess"), materialShininess);
 
-
-    // now push buffer data through the pipeline to render this object
     gl.drawArrays( gl.TRIANGLES, 0, this.numverts() );
 
 }
