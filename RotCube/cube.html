@@ -1,94 +1,136 @@
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/hmtl" lang="en">
-<head>
-  <title>WebGL Cube using OOP</title>
-  <meta charset="UTF-8"/>
+	<head>
+		<title>Rubik's Cube</title>
+		<meta charset="UTF-8"/>
 		<link rel="stylesheet" type="text/css" href="layout/rubiksCube.css">
 
-  <script id="vertex-shader" type="x-shader/x-vertex">
-attribute vec4 vPosition; // vert attribs bound to array buffer data 
-attribute vec4 vColor; // vert attribs bound to array buffer data
+		<script id="vertex-shader" type="x-shader/x-vertex">
+			attribute vec4 vPosition; // vert attribs bound to array buffer data
+			attribute vec4 vColor; // vert attribs bound to array buffer data
 
-varying vec4 color; // sent down to later stages of the pipeline
+			varying vec4 color; // sent down to later stages of the pipeline
 
-uniform mat4 projection; // projection matrix passed from the app
-uniform mat4 modeltransform; // per-object transform passed from the app
+			uniform mat4 projection; // projection matrix passed from the app
+			uniform mat4 modeltransform; // per-object transform passed from the app
 
-void main() 
-{
-    color = vColor; // pass vertex color through unchanged
+			void main()
+			{
+			color = vColor; // pass vertex color through unchanged
 
-    // some per-object matrix ops now done at app level
-    // but final matrix chain is processed here
-    gl_Position = projection * modeltransform * vPosition;
-}
-  </script>
+			// some per-object matrix ops now done at app level
+			// but final matrix chain is processed here
+			gl_Position = projection * modeltransform * vPosition;
+			}
+		</script>
 
-  <script id="fragment-shader" type="x-shader/x-fragment">
-#ifdef GL_ES
-precision highp float;
-#endif
+		<script id="fragment-shader" type="x-shader/x-fragment">
+			#ifdef GL_ES
+			precision highp float;
+			#endif
 
-varying vec4 color;
+			varying vec4 color;
 
-void
-main()
-{
-    gl_FragColor = color;
-}
-  </script>
+			void
+			main()
+			{
+			gl_FragColor = color;
+			}
+		</script>
 
-  <script type="text/javascript" src="../Common/webgl-utils.js"></script>
-  <script type="text/javascript" src="../Common/initShaders.js"></script>
-  <script type="text/javascript" src="../Common/MV.js"></script>
-  <script type="text/javascript" src="../Common/jquery-2.0.3.min.js"></script>
-  <script type="text/javascript" src="initGL.js"></script>
-  <script type="text/javascript" src="cube.js"></script>
-</head>
-<body>
-    <canvas id="gl-canvas" width="512" height="512">Oops ...
-        your browser doesn't support the HTML5 canvas element</canvas>
-<span class="buttons">
-    <div class="view_buttons">
-        <button id = "Btn_Perspective">Set Perspective</button>
-        <button id = "Btn_Orthographic">Set Orthographic</button>
-    </div>
-<span class="test_buttons">
-    <div>
-        <button id="btnOrbitTopLeft">Orbit Top Left</button>
-        <button id="btnOrbitTopRight">Orbit Top Right</button>
-    </div>
-    <div>
-        <button id="btnOrbitLeftDown">Orbit Left Down</button>
-        <button id="btnOrbitLeftUp">Orbit Left Up</button>
-    </div>
-    <div>
-        <button id="btnOrbitRightDown">Orbit Right Down</button>
-        <button id="btnOrbitRightUp">Orbit Right Up</button>
-    </div>
-    <div>
-        <button id="btnOrbitBottomLeft">Orbit Bottom Left</button>
-        <button id="btnOrbitBottomRight">Orbit Bottom Right</button>
-    </div>
-    <div>
-        <button id="btnOrbitBackLeft">Orbit Back Left</button>
-        <button id="btnOrbitBackRight">Orbit Back Right</button>
-    </div>
-    <div>
-        <button id="btnOrbitFrontLeft">Orbit Front Left</button>
-        <button id="btnOrbitFrontRight">Orbit Front Right</button>   
-    </div>
-</span>
-    <div>
-        <br />
-        <button id="btnRotateCubeLeft">Rotate Left</button>
-        <button id="btnRotateCubeRight">Rotate Right</button>
-        <button id="btnRotateCubeUp">Rotate Up</button>
-        <button id="btnRotateCubeDown">Rotate Down</button>   
-    </div>
-    <div>
-        <br />
-        <textarea id="tbInitialState" rows="10" cols="20">GGW
+		<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+		<script type="text/javascript" src="../Common/initShaders.js"></script>
+		<script type="text/javascript" src="../Common/MV.js"></script>
+		<script type="text/javascript" src="../Common/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="initGL.js"></script>
+		<script type="text/javascript" src="cube.js"></script>
+	</head>
+	<h1> A Rubik's Cube </h1>
+	<h2> created by Kris Escobar and Gabriela Rosales </h2>
+	<body>
+		<table class="table">
+			<tr>
+				<td>
+				<canvas id="gl-canvas" width="512" height="512">
+					Oops ...
+					your browser doesn't support the HTML5 canvas element
+				</canvas></td>
+
+				<td><span class="buttons">
+					<div class="view_buttons">
+						<button id = "Btn_Perspective">
+							Set Perspective
+						</button>
+						<button id = "Btn_Orthographic">
+							Set Orthographic
+						</button>
+					</div> <!-- <span class="test_buttons">
+						<div>
+							<button id="btnOrbitTopLeft">
+								Orbit Top Left
+							</button>
+							<button id="btnOrbitTopRight">
+								Orbit Top Right
+							</button>
+						</div>
+						<div>
+							<button id="btnOrbitLeftDown">
+								Orbit Left Down
+							</button>
+							<button id="btnOrbitLeftUp">
+								Orbit Left Up
+							</button>
+						</div>
+						<div>
+							<button id="btnOrbitRightDown">
+								Orbit Right Down
+							</button>
+							<button id="btnOrbitRightUp">
+								Orbit Right Up
+							</button>
+						</div>
+						<div>
+							<button id="btnOrbitBottomLeft">
+								Orbit Bottom Left
+							</button>
+							<button id="btnOrbitBottomRight">
+								Orbit Bottom Right
+							</button>
+						</div>
+						<div>
+							<button id="btnOrbitBackLeft">
+								Orbit Back Left
+							</button>
+							<button id="btnOrbitBackRight">
+								Orbit Back Right
+							</button>
+						</div>
+						<div>
+							<button id="btnOrbitFrontLeft">
+								Orbit Front Left
+							</button>
+							<button id="btnOrbitFrontRight">
+								Orbit Front Right
+							</button>
+						</div> </span> -->
+					<div>
+						<br />
+						<button id="btnRotateCubeLeft">
+							Rotate Left
+						</button>
+						<button id="btnRotateCubeRight">
+							Rotate Right
+						</button>
+						<button id="btnRotateCubeUp">
+							Rotate Up
+						</button>
+						<button id="btnRotateCubeDown">
+							Rotate Down
+						</button>
+					</div>
+					<div>
+						<br />
+						<textarea id="tbInitialState" rows="10" cols="20">GGW
 RRG
 RRG
 OWWGGOYYR
@@ -99,21 +141,22 @@ BOB
 BOB
 OGO
 WWB
-WWB        </textarea>
-        <textarea id="tbSolution" rows="10" cols="20">
+WWB
+        </textarea>
+						<textarea id="tbSolution" rows="10" cols="20">
 O1W1R1Y3
         </textarea>
-    </div>
-    <div>
-        <input id="btnLoadIntialState" type="button" value="Load Initial State" />
-        <input id="btnLoadSolution" type="button" value="Load Solution" />
-    </div>
-    <div>
-        <input id="btnClear" type="button" value="Clear Initial State" />
-        <input id="btnPlay" type="button" value="Play Solution" />
-    </div>
-        
-    
-</span>
-</body>
+					</div>
+					<div>
+						<input id="btnLoadIntialState" type="button" value="Load Initial State" />
+						<input id="btnLoadSolution" type="button" value="Load Solution" />
+					</div>
+					<div>
+						<input id="btnClear" type="button" value="Clear Initial State" />
+						<input id="btnPlay" type="button" value="Play Solution" />
+					</div> </span></td>
+			</tr>
+		</table>
+
+	</body>
 </html>
