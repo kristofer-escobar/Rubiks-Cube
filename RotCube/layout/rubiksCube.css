@@ -1,0 +1,57 @@
+canvas {
+	background:blue;
+}
+html {
+	font-family:sans-serif;
+	-webkit-text-size-adjust:100%;
+	-ms-text-size-adjust:100%;
+	background-image:url('background.jpg');
+	background-color:black;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:right bottom;
+}
+body {
+	font-family:Helvetica,Verdana,Arial,sans-serif;
+	font-size:12pt;
+	font-weight:normal;
+	font-style:normal;
+	margin:0;
+	text-align:center;
+}
+h1 {
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+	color:gray;
+	font-size:24pt;
+	font-weight:500;
+	font-style:normal;
+	border-bottom:1px dashed red;
+	margin-top:20px;
+	margin-bottom:0px;
+}
+h2 {
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+	color:gray;
+	font-size:12pt;
+	font-weight:500;
+	font-style:normal;
+	margin-top:0px;
+}
+h3 {
+	font-family:Helvetica,Verdana,Arial,sans-serif;
+	font-size:16pt;
+	font-weight:normal;
+	font-style:normal;
+}
+table.table {
+	border-collapse:collapse;
+	border-spacing:0;
+	margin-left:auto;
+	margin-right:auto;
+}
+td {
+	color:red;
+}
+td{
+	color: white;
+}
