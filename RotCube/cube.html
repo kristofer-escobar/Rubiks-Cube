@@ -8,11 +8,19 @@
 		<script id="vertex-shader" type="x-shader/x-vertex">
 			attribute vec4 vPosition; // vert attribs bound to array buffer data
 			attribute vec4 vColor; // vert attribs bound to array buffer data
+			attribute  vec4 vNormal;
+
 
 			varying vec4 color; // sent down to later stages of the pipeline
 
 			uniform mat4 projection; // projection matrix passed from the app
 			uniform mat4 modeltransform; // per-object transform passed from the app
+
+			uniform vec4 ambientProduct, diffuseProduct, specularProduct;
+			
+			uniform vec4 lightPosition;
+
+			uniform float shininess;
 
 			void main()
 			{
@@ -21,10 +29,39 @@
 			// some per-object matrix ops now done at app level
 			// but final matrix chain is processed here
 			gl_Position = projection * modeltransform * vPosition;
+
+			vec3 pos = -(modeltransform * vPosition).xyz;
+			vec3 light = lightPosition.xyz;
+
+			vec3 L = normalize( light - pos );
+			vec3 E = normalize( -pos );
+			vec3 H = normalize( L + E );
+
+			// Transform vertex normal into eye coordinates
+			vec3 N = normalize( (modeltransform*vNormal).xyz);
+
+			// Compute terms in the illumination equation
+			vec4 ambient = ambientProduct;
+			float Kd = max( dot(L, N), 0.0 );
+			vec4  diffuse = Kd*diffuseProduct;
+			float Ks = pow( max(dot(N, H), 0.0), shininess );
+			vec4  specular = Ks * specularProduct;
+			if( dot(L, N) < 0.0 ) {
+			specular = vec4(0.8, 0.8, 0.3, 0);
+
+			}
+
+			gl_Position = projection * modeltransform * vPosition;
+
+			color = ambient +vColor * diffuse   + specular;
+
+			color.a = 1.0;
+
 			}
 		</script>
 
 		<script id="fragment-shader" type="x-shader/x-fragment">
+
 			#ifdef GL_ES
 			precision highp float;
 			#endif
@@ -64,7 +101,7 @@
 						<button id = "Btn_Orthographic">
 							Set Orthographic
 						</button>
-					</div>  <span class="test_buttons">
+					</div> <span class="test_buttons">
 						<div>
 							<button id="btnOrbitTopLeft">
 								Orbit Top Left
@@ -112,21 +149,21 @@
 							<button id="btnOrbitFrontRight">
 								Orbit Front Right
 							</button>
-						</div> </span> 
+						</div> </span>
 					<div>
 						<h3>Rotation Controls</h3>
-	
+
 						<button id="btnRotateCubeLeft">
-						
+
 						</button>
 						<button id="btnRotateCubeRight">
-							
+
 						</button>
 						<button id="btnRotateCubeUp">
-							
+
 						</button>
 						<button id="btnRotateCubeDown">
-							
+
 						</button>
 					</div>
 					<div>

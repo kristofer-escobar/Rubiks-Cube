@@ -40,6 +40,9 @@ Cube.prototype.init = function(program, colors)
     /* send vert positions to the buffer, must repeat this
        wherever we change the vert positions for this cube */
     gl.bufferData( gl.ARRAY_BUFFER, flatten(this.points), gl.STATIC_DRAW );
+
+
+
 }
 
 Cube.prototype.draw = function () {
@@ -78,8 +81,34 @@ Cube.prototype.draw = function () {
     gl.vertexAttribPointer( vPosId, 4, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vPosId );
 
+    var vNormal = gl.getAttribLocation(this.program, "vNormal");
+	gl.vertexAttribPointer(vNormal, 4, gl.FLOAT, false, 0, 0);
+	gl.enableVertexAttribArray(vNormal);
+
+	var lightPosition = vec4(3.0, 1.0, 0.0, 0.0);
+	var lightAmbient = vec4(0.0, 0.0, 0.8, 1.0);
+	var lightDiffuse = vec4(1.0, 1.0, 1.0, 1.0);
+	var lightSpecular = vec4(1.0, 1.0, 1.0, 1.0);
+
+	var materialAmbient = vec4(0.0, 0.0, 0.0, 1.0);
+	var materialDiffuse = vec4(1.0, 1.0, 1.0, 1.0);
+	var materialSpecular = vec4(0.0, 0.0, 0.0, 0.0);
+	var materialShininess = 6.0;
+
+	var ambientProduct = mult(lightAmbient, materialAmbient);
+	var diffuseProduct = mult(lightDiffuse, materialDiffuse);
+	var specularProduct = mult(lightSpecular, materialSpecular);
+
+	gl.uniform4fv(gl.getUniformLocation(this.program, "ambientProduct"), flatten(ambientProduct));
+	gl.uniform4fv(gl.getUniformLocation(this.program, "diffuseProduct"), flatten(diffuseProduct));
+	gl.uniform4fv(gl.getUniformLocation(this.program, "specularProduct"), flatten(specularProduct));
+	gl.uniform4fv(gl.getUniformLocation(this.program, "lightPosition"), flatten(lightPosition));
+	gl.uniform1f(gl.getUniformLocation(this.program, "shininess"), materialShininess);
+
+
     // now push buffer data through the pipeline to render this object
     gl.drawArrays( gl.TRIANGLES, 0, this.numverts() );
+
 }
 
 /* Returns the total count of vertices to be sent into the pipeline. */
@@ -248,6 +277,7 @@ Cube.prototype.rotateLeft = function () {
     }
 }
 
+
 /* Set up event callback to start the application */
 window.onload = function () {
 
@@ -383,6 +413,7 @@ window.onload = function () {
 
     // load and compile our shaders into a program object
     var shaders = initShaders( gl, "vertex-shader", "fragment-shader" );
+
 
     // Counter for current Y_AXIS.
     var currentY = -2;
@@ -562,12 +593,12 @@ window.onload = function () {
     with different color faces.
 */
 var colors = {
-    "R":[1.0, 0.0, 0.0, 1.0], // red
-    "Y":[1.0, 1.0, 0.0, 1.0], // yellow
-    "G":[0.0, 1.0, 0.0, 1.0], // green
-    "B":[0.0, 0.0, 1.0, 1.0], // blue
-    "O":[1.0, 165/255, 0, 1.0], // orange
-    "W":[1.0, 1.0, 1.0, 1.0]  // white
+    "R":[202/255, 15/255, 22/255, 1.0], // red
+    "Y":[255, 240/255, 1/255, 1.0], // yellow
+    "G":[0.0, 114/255, 36/255, 1.0], // green
+    "B":[0.0, 151/255, 230/255, 1.0], // blue
+    "O":[244/255, 88/255, 1/255, 1.0], // orange
+    "W":[209/255, 203/255, 207/255, 1.0]  // white
 };
 
 // Helper function to check a dictionary.
