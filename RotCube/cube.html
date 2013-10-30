@@ -93,14 +93,7 @@
 				</canvas></td>
 
 				<td><span class="buttons">
-					<div class="view_buttons">
-						<button id = "Btn_Perspective">
-							Set Perspective
-						</button>
-						<button id = "Btn_Orthographic">
-							Set Orthographic
-						</button>
-					</div> <span class="test_buttons">
+					<span class="test_buttons">
 						<div>
 							<button id="btnOrbitTopLeft">
 								Orbit Top Left
@@ -184,14 +177,23 @@ WWB
 O1W1R1Y3
         </textarea>
 					</div>
+                    <div class="view_buttons">
+						<button id = "Btn_Perspective" class="visible_button">
+							Set Perspective
+						</button>
+						<button id = "Btn_Orthographic">
+							Set Orthographic
+						</button>
+					</div> 
 					<div>
 						<input id="btnLoadIntialState" type="button" value="Load Initial State" />
 						<input id="btnLoadSolution" type="button" value="Load Solution" />
 					</div>
 					<div>
-						<input id="btnClear" type="button" value="Clear Initial State" />
+						<input id="btnClear" type="button" value="Clear State & Solution" />
 						<input id="btnPlay" type="button" value="Play Solution" />
-					</div> </span></td>
+					</div>
+                    </span></td>
 			</tr>
 		</table>
 

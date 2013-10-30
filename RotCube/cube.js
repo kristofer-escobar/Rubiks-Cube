@@ -404,7 +404,7 @@ window.onload = function () {
     });
 
     // Hide other buttons for now.
-    $('.view_buttons').hide();
+    //$('.view_buttons').hide();
     $('.test_buttons').hide();
 
     initGL(); // basic WebGL setup for the scene 

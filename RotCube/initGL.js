@@ -46,9 +46,10 @@ function initGL()
             // Check for a second cube.
             if(drawables.length > 1){
                 // Change prespective.
-                projection = mult(projection,perspective(55, (canvas.width/canvas.height), 0.3, 1));
-                projection = mult(projection,lookAt([0,0,-1],[0,-1,1],[0,1,0]));
-                projection = mult(projection,ortho(-4, 4, -4, 4, -100,100));
+                projection = mult(projection,ortho(-2, 2, -2, 2, -100,100));
+                projection = mult(projection,perspective(55, (canvas.width/canvas.height), 0.2, 40));
+                projection = mult(projection,lookAt([4,1,-3],[1,1,2],[0,1,0]));
+                
             }
         },
         false
