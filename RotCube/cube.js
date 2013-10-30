@@ -86,12 +86,12 @@ Cube.prototype.draw = function () {
 	gl.enableVertexAttribArray(vNormal);
 
 	var lightPosition = vec4(-1, -2.0, 0.0, 1.0);
-	var lightAmbient = vec4(0.8, 0.8, 0.8, 1.0);
-	var lightDiffuse = vec4(.8, 1, .9, 1.0);
+	var lightAmbient = vec4(1, 0.8, 0.8, 1.0);
+	var lightDiffuse = vec4(1, 1, 1, 1.0);
 	var lightSpecular = vec4(1.0, 1.0, 1.0, 1.0);
 
-	var materialAmbient = vec4(0.0, 0.0, 0.0, 1.0);
-	var materialDiffuse = vec4(1.5, 1.0, 1.0, 1.0);
+	var materialAmbient = vec4(0, 0, 0, 1.0);
+	var materialDiffuse = vec4(2.0, 2.0, 2.0, 1.0);
 	var materialSpecular = vec4(0.4, 0.3, 0.3, 0.0);
 	var materialShininess = 8.0;
 
